@@ -7,70 +7,12 @@ class Board
 
        add_pieces
        render
+
+       play until play == "exit"
     end
 
     def get_piece(rank, file)
         @grid[rank][file]
-    end
-
-    # call methods from inside methods, not from outside (in the class space)
-
-    private     #can't call method from outside
-
-    def render
-        letters = "HGFEDCBA"
-        letter_idx = 0
-
-        @grid.each do |rank|
-            print letters[letter_idx] + " "
-            letter_idx += 1
-
-            rank.each do |piece|
-                if piece.is_a?(Piece)
-                    print piece.name + " "
-                else
-                    print piece + " "
-                end
-            end
-            puts
-
-        end
-
-        print "  "
-        (1..8).each { |num| print num.to_s + " " }
-        puts
-        
-    end
-
-    def add_pieces
-       add_pawns(1, "Black")
-       add_pawns(6, "White")
-       add_non_pawns(0, "Black")
-       add_non_pawns(7, "White")
-    end
-
-    def add_pawns(rank, color)
-        (0..7).each do |file|
-            @grid[rank][file] = Pawn.new(rank, file, color)
-        end
-    end
-
-    def add_non_pawns(rank, color)
-        [0, 7].each { |file| @grid[rank][file] = Rook.new(rank, file, color) }
-        [1, 6].each { |file| @grid[rank][file] = Knight.new(rank, file, color) }
-        [2, 5].each { |file| @grid[rank][file] = Bishop.new(rank, file, color) }
-        [3].each { |file| @grid[rank][file] = Queen.new(rank, file, color) }
-        [4].each { |file| @grid[rank][file] = King.new(rank, file, color) }
-    end
-end
-
-class Game
-    attr_reader :board
-    def initialize(rank, file)
-        @board = Board.new(rank, file)
-
-        p @board.get_piece(0, 0)
-        # play until play == "exit"
     end
 
     def play
@@ -143,6 +85,66 @@ class Game
         @board[finish_rank][finish_file] = @board[start_rank][start_file]
         @board[start_rank][start_file] = "_"
     end
+
+    # call methods from inside methods, not from outside (in the class space)
+
+    private     #can't call method from outside
+
+    def render
+        letters = "HGFEDCBA"
+        letter_idx = 0
+
+        @grid.each do |rank|
+            print letters[letter_idx] + " "
+            letter_idx += 1
+
+            rank.each do |piece|
+                if piece.is_a?(Piece)
+                    print piece.name + " "
+                else
+                    print piece + " "
+                end
+            end
+            puts
+
+        end
+
+        print "  "
+        (1..8).each { |num| print num.to_s + " " }
+        puts
+        
+    end
+
+    def add_pieces
+       add_pawns(1, "Black")
+       add_pawns(6, "White")
+       add_non_pawns(0, "Black")
+       add_non_pawns(7, "White")
+    end
+
+    def add_pawns(rank, color)
+        (0..7).each do |file|
+            @grid[rank][file] = Pawn.new(rank, file, color)
+        end
+    end
+
+    def add_non_pawns(rank, color)
+        [0, 7].each { |file| @grid[rank][file] = Rook.new(rank, file, color) }
+        [1, 6].each { |file| @grid[rank][file] = Knight.new(rank, file, color) }
+        [2, 5].each { |file| @grid[rank][file] = Bishop.new(rank, file, color) }
+        [3].each { |file| @grid[rank][file] = Queen.new(rank, file, color) }
+        [4].each { |file| @grid[rank][file] = King.new(rank, file, color) }
+    end
+end
+
+class Game
+    # attr_reader :board
+    # def initialize(rank, file)
+    #     @board = Board.new(rank, file)
+
+    #     p @board.get_piece(0, 0)
+        # play until play == "exit"
+    # end
 
 end
 
@@ -220,8 +222,8 @@ class King < Piece
     end
 end
 
-@newthing = Game.new(8,8)
-# @newthing = Board.new(8,8)
+# @newthing = Game.new(8,8)
+@newthing = Board.new(8,8)
 
 # @newthing.parse_move("G1 F1")
 # @newthing.parse_move("H2 F3")
