@@ -11,9 +11,9 @@ class Board
        play until play == "exit"
     end
 
-    def get_piece(rank, file)
-        @grid[rank][file]
-    end
+    # def get_piece(rank, file)
+    #     @grid[rank][file]
+    # end
 
     def play
         puts "What's the next move?"
@@ -53,15 +53,15 @@ class Board
     end
 
     def move(start_rank, start_file, finish_rank, finish_file)
-        start = @board[start_rank][start_file]
-        finish = @board[finish_rank][finish_file]
+        start = @grid[start_rank][start_file]
+        finish = @grid[finish_rank][finish_file]
         rank_move = (finish_rank - start_rank)
         file_move = (finish_file - start_file)
 
         if start.is_a?(Piece)
             if start.is_valid?(rank_move, file_move)
                 move_type(finish)
-                move_to(@board, start_rank, start_file, finish_rank, finish_file)
+                move_to(@grid, start_rank, start_file, finish_rank, finish_file)
             else
                 puts "Invalid Move!"
                 return
@@ -82,8 +82,8 @@ class Board
     end
 
     def move_to(grid, start_rank, start_file, finish_rank, finish_file)
-        @board[finish_rank][finish_file] = @board[start_rank][start_file]
-        @board[start_rank][start_file] = "_"
+        @grid[finish_rank][finish_file] = @grid[start_rank][start_file]
+        @grid[start_rank][start_file] = "_"
     end
 
     # call methods from inside methods, not from outside (in the class space)
@@ -140,9 +140,9 @@ end
 class Game
     # attr_reader :board
     # def initialize(rank, file)
-    #     @board = Board.new(rank, file)
+    #     @grid = Board.new(rank, file)
 
-    #     p @board.get_piece(0, 0)
+    #     p @grid.get_piece(0, 0)
         # play until play == "exit"
     # end
 
@@ -224,6 +224,8 @@ end
 
 # @newthing = Game.new(8,8)
 @newthing = Board.new(8,8)
+p @newthing.class
+
 
 # @newthing.parse_move("G1 F1")
 # @newthing.parse_move("H2 F3")
