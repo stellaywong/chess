@@ -8,49 +8,12 @@ class Board
        add_pieces
        render
 
-       play until play == "exit"
+    #    play until play == "exit"
     end
 
     # def get_piece(rank, file)
     #     @grid[rank][file]
     # end
-
-    def play
-        puts "What's the next move?"
-        console_input = gets.chomp
-        if console_input != "exit"
-            parse_move(console_input)
-        else
-            return
-        end
-    end
-
-    def parse_move(console_input)
-        start_string, finish_string = console_input.split(" ")
-        
-        alphabet = "HGFEDCBA"
-        start_letter = start_string.split("")[0].upcase
-        finish_letter = finish_string.split("")[0].upcase
-
-        start_rank = alphabet.index(start_letter)
-        finish_rank = alphabet.index(finish_letter)
-        if (!start_rank || !finish_rank)
-            puts "Vertical off the board!"
-            return
-        end
-            
-        start_file = start_string.split("")[1].to_i - 1
-        finish_file = finish_string.split("")[1].to_i - 1
-
-        [start_file, finish_file].each do |coordinate|
-            if coordinate < 0 || coordinate > 7
-                puts "Horizontal off the board!"
-                return
-            end
-        end
-
-        move(start_rank, start_file, finish_rank, finish_file)
-    end
 
     def move(start_rank, start_file, finish_rank, finish_file)
         start = @grid[start_rank][start_file]
@@ -146,6 +109,42 @@ class Game
         # play until play == "exit"
     # end
 
+    def play
+        puts "What's the next move?"
+        console_input = gets.chomp
+        if console_input != "exit"
+            parse_move(console_input)
+        else
+            return
+        end
+    end
+
+    def parse_move(console_input)
+        start_string, finish_string = console_input.split(" ")
+        
+        alphabet = "HGFEDCBA"
+        start_letter = start_string.split("")[0].upcase
+        finish_letter = finish_string.split("")[0].upcase
+
+        start_rank = alphabet.index(start_letter)
+        finish_rank = alphabet.index(finish_letter)
+        if (!start_rank || !finish_rank)
+            puts "Vertical off the board!"
+            return
+        end
+            
+        start_file = start_string.split("")[1].to_i - 1
+        finish_file = finish_string.split("")[1].to_i - 1
+
+        [start_file, finish_file].each do |coordinate|
+            if coordinate < 0 || coordinate > 7
+                puts "Horizontal off the board!"
+                return
+            end
+        end
+
+        move(start_rank, start_file, finish_rank, finish_file)
+    end
 end
 
 class Piece
