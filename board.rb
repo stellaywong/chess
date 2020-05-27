@@ -102,12 +102,12 @@ end
 
 class Game
     # attr_reader :board
-    # def initialize(rank, file)
-    #     @grid = Board.new(rank, file)
+    def initialize(rank, file)
+        @board = Board.new(rank, file)
 
-    #     p @grid.get_piece(0, 0)
-        # play until play == "exit"
-    # end
+        # p @grid.get_piece(0, 0)
+        play until play == "exit"
+    end
 
     def play
         puts "What's the next move?"
@@ -143,7 +143,7 @@ class Game
             end
         end
 
-        move(start_rank, start_file, finish_rank, finish_file)
+        @board.move(start_rank, start_file, finish_rank, finish_file)
     end
 end
 
@@ -221,9 +221,9 @@ class King < Piece
     end
 end
 
-# @newthing = Game.new(8,8)
-@newthing = Board.new(8,8)
-p @newthing.class
+@newthing = Game.new(8,8)
+# @newthing = Board.new(8,8)
+# p @newthing.class
 
 
 # @newthing.parse_move("G1 F1")
